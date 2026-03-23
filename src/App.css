@@ -141,7 +141,8 @@
   font-size: 22px;
   font-weight: 700;
   cursor: pointer;
-  padding: 0 13px;
+  padding: 8px 13px;
+  flex-shrink: 0;
   line-height: 1;
   transition: background 0.12s;
 }
