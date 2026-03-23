@@ -3,14 +3,6 @@
   --orange: #ff6b2b;
   --orange-light: #ff8c55;
   --orange-dim: rgba(255, 107, 43, 0.12);
-  --black: #111111;
-  --black-mid: #1a1a1a;
-  --black-soft: #252525;
-  --grey: #3a3a3a;
-  --grey-light: #888;
-  --white: #ffffff;
-  --text: #e0e0e0;
-  --border: rgba(255, 255, 255, 0.08);
   --radius: 8px;
   --sidebar-w: 260px;
   font-family: 'Inter', system-ui, sans-serif;
@@ -39,6 +31,9 @@
 .sidebar-header {
   padding: 28px 24px 20px;
   border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .app-title {
@@ -165,7 +160,7 @@
 
 .icon-btn:hover {
   color: var(--white);
-  background: rgba(255, 255, 255, 0.07);
+  background: var(--hover-bg);
 }
 
 .icon-btn.danger:hover {
@@ -276,7 +271,7 @@
   transition: border-color 0.12s, opacity 0.12s;
 }
 
-.todo-item:hover { border-color: rgba(255, 255, 255, 0.14); }
+.todo-item:hover { border-color: var(--item-hover-border); }
 .todo-item:hover .delete-item-btn { opacity: 1; }
 .todo-item.completed { opacity: 0.5; }
 
@@ -360,3 +355,38 @@
   :root { --sidebar-w: 200px; }
   .todo-main { padding: 24px 20px; }
 }
+
+/* ── Theme toggle ── */
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  color: var(--grey-light);
+  font-size: 16px;
+  line-height: 1;
+  padding: 4px 8px;
+  transition: color 0.12s, background 0.12s, border-color 0.12s;
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  color: var(--orange);
+  border-color: var(--orange);
+  background: var(--orange-dim);
+}
+
+/* ── Theme transition ── */
+html {
+  transition: background-color 0.25s ease;
+}
+
+.sidebar,
+.todo-item,
+.add-item-input,
+.create-list-input,
+.list-rename-input,
+.todo-edit-input {
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+

@@ -1,22 +1,27 @@
 import { useState, type KeyboardEvent } from 'react';
 import type { TodoList } from '../types';
+import type { Theme } from '../hooks/useTheme';
 
 interface Props {
   lists: TodoList[];
   activeListId: string | null;
+  theme: Theme;
   onSelect: (id: string) => void;
   onCreateList: (name: string) => void;
   onRenameList: (id: string, name: string) => void;
   onDeleteList: (id: string) => void;
+  onToggleTheme: () => void;
 }
 
 export const Sidebar = ({
   lists,
   activeListId,
+  theme,
   onSelect,
   onCreateList,
   onRenameList,
   onDeleteList,
+  onToggleTheme,
 }: Props) => {
   const [newListName, setNewListName] = useState('');
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -54,6 +59,13 @@ export const Sidebar = ({
     <aside className="sidebar">
       <div className="sidebar-header">
         <h1 className="app-title">Todo<span>.</span></h1>
+        <button
+          className="theme-toggle"
+          onClick={onToggleTheme}
+          title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
+          {theme === 'dark' ? '☀' : '☽'}
+        </button>
       </div>
 
       <nav className="list-nav">

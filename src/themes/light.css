@@ -1,0 +1,13 @@
+/* ── Light theme ── */
+[data-theme="light"] {
+  --black: #f0f2f5;
+  --black-mid: #ffffff;
+  --black-soft: #e8eaed;
+  --grey: #c8c8c8;
+  --grey-light: #888888;
+  --white: #111111;
+  --text: #333333;
+  --border: rgba(0, 0, 0, 0.1);
+  --hover-bg: rgba(0, 0, 0, 0.05);
+  --item-hover-border: rgba(0, 0, 0, 0.12);
+}
