@@ -68,7 +68,7 @@ export const TodoList = ({
   return (
     <main className="todo-main">
       <header className="todo-header">
-        <h2 className="list-title">{list.name}</h2>
+        <h2 className="list-title" style={list.color ? { color: list.color } : undefined}>{list.name}</h2>
         <span className="item-count">
           {pending.length} remaining · {done.length} done
         </span>

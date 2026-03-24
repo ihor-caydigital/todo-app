@@ -117,6 +117,13 @@ export const useTodoApp = () => {
     }));
   }, []);
 
+  const setListColor = useCallback((id: string, color: string) => {
+    setState((s) => ({
+      ...s,
+      lists: s.lists.map((l) => (l.id === id ? { ...l, color } : l)),
+    }));
+  }, []);
+
   const activeList = state.lists.find((l) => l.id === state.activeListId) ?? null;
 
   return {
@@ -126,6 +133,7 @@ export const useTodoApp = () => {
     createList,
     renameList,
     deleteList,
+    setListColor,
     addItem,
     toggleItem,
     editItem,
