@@ -14,6 +14,7 @@ function App() {
     createList,
     renameList,
     deleteList,
+    setListColor,
     addItem,
     toggleItem,
     editItem,
@@ -33,6 +34,7 @@ function App() {
         onCreateList={createList}
         onRenameList={renameList}
         onDeleteList={deleteList}
+        onSetListColor={setListColor}
         onToggleTheme={toggleTheme}
       />
       {activeList ? (

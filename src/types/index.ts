@@ -8,6 +8,7 @@ export interface TodoItem {
 export interface TodoList {
   id: string;
   name: string;
+  color?: string;
   items: TodoItem[];
   createdAt: number;
 }
