@@ -7,9 +7,15 @@ interface Props {
   onToggle: (listId: string, itemId: string) => void;
   onEdit: (listId: string, itemId: string, text: string) => void;
   onDelete: (listId: string, itemId: string) => void;
+  onDragStart?: () => void;
+  onDragEnd?: () => void;
+  onDragOver?: () => void;
+  onDrop?: () => void;
+  isDragOver?: boolean;
+  isDragging?: boolean;
 }
 
-export const TodoItem = ({ item, listId, onToggle, onEdit, onDelete }: Props) => {
+export const TodoItem = ({ item, listId, onToggle, onEdit, onDelete, onDragStart, onDragEnd, onDragOver, onDrop, isDragOver, isDragging }: Props) => {
   const [editing, setEditing] = useState(false);
   const [editText, setEditText] = useState(item.text);
 
@@ -30,8 +36,25 @@ export const TodoItem = ({ item, listId, onToggle, onEdit, onDelete }: Props) =>
     }
   };
 
+  const classNames = [
+    'todo-item',
+    item.completed ? 'completed' : '',
+    isDragOver ? 'drag-over' : '',
+    isDragging ? 'dragging' : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
-    <li className={`todo-item${item.completed ? ' completed' : ''}`}>
+    <li
+      className={classNames}
+      draggable
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+      onDragOver={(e) => { e.preventDefault(); onDragOver?.(); }}
+      onDrop={onDrop}
+    >
+      <span className="drag-handle" title="Drag to reorder" aria-label="Drag to reorder">⠿</span>
       <button
         className={`check-btn${item.completed ? ' checked' : ''}`}
         onClick={() => onToggle(listId, item.id)}
