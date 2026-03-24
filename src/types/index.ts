@@ -16,3 +16,10 @@ export interface AppState {
   lists: TodoList[];
   activeListId: string | null;
 }
+
+export type SharePermission = 'view' | 'edit';
+
+export interface SharePayload {
+  list: TodoList;
+  permission: SharePermission;
+}
