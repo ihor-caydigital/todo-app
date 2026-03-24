@@ -117,6 +117,18 @@ export const useTodoApp = () => {
     }));
   }, []);
 
+  const importList = useCallback((list: TodoList) => {
+    const imported: TodoList = {
+      ...list,
+      id: uuid(),
+      items: list.items.map((item) => ({ ...item, id: uuid() })),
+    };
+    setState((s) => ({
+      lists: [...s.lists, imported],
+      activeListId: imported.id,
+    }));
+  }, []);
+
   const activeList = state.lists.find((l) => l.id === state.activeListId) ?? null;
 
   return {
@@ -126,6 +138,7 @@ export const useTodoApp = () => {
     createList,
     renameList,
     deleteList,
+    importList,
     addItem,
     toggleItem,
     editItem,

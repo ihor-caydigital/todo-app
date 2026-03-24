@@ -10,6 +10,7 @@ interface Props {
   onCreateList: (name: string) => void;
   onRenameList: (id: string, name: string) => void;
   onDeleteList: (id: string) => void;
+  onShareList: (id: string) => void;
   onToggleTheme: () => void;
 }
 
@@ -21,6 +22,7 @@ export const Sidebar = ({
   onCreateList,
   onRenameList,
   onDeleteList,
+  onShareList,
   onToggleTheme,
 }: Props) => {
   const [newListName, setNewListName] = useState('');
@@ -89,6 +91,16 @@ export const Sidebar = ({
               <span className="list-name">{list.name}</span>
             )}
             <div className="list-actions">
+              <button
+                className="icon-btn"
+                title="Share"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onShareList(list.id);
+                }}
+              >
+                ↗
+              </button>
               <button
                 className="icon-btn"
                 title="Rename"
