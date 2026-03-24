@@ -8,6 +8,7 @@ interface Props {
   onToggleItem: (listId: string, itemId: string) => void;
   onEditItem: (listId: string, itemId: string, text: string) => void;
   onDeleteItem: (listId: string, itemId: string) => void;
+  onReorderItems: (listId: string, dragId: string, targetId: string) => void;
 }
 
 export const TodoList = ({
@@ -16,8 +17,11 @@ export const TodoList = ({
   onToggleItem,
   onEditItem,
   onDeleteItem,
+  onReorderItems,
 }: Props) => {
   const [newText, setNewText] = useState('');
+  const [dragId, setDragId] = useState<string | null>(null);
+  const [dragOverId, setDragOverId] = useState<string | null>(null);
 
   const handleAdd = () => {
     const text = newText.trim();
@@ -30,8 +34,36 @@ export const TodoList = ({
     if (e.key === 'Enter') handleAdd();
   };
 
+  const handleDragStart = (id: string) => {
+    setDragId(id);
+  };
+
+  const handleDragEnd = () => {
+    setDragId(null);
+    setDragOverId(null);
+  };
+
+  const handleDragOver = (id: string) => {
+    if (dragId !== id) setDragOverId(id);
+  };
+
+  const handleDrop = (targetId: string) => {
+    if (dragId && dragId !== targetId) {
+      onReorderItems(list.id, dragId, targetId);
+    }
+    setDragId(null);
+    setDragOverId(null);
+  };
+
   const pending = list.items.filter((i) => !i.completed);
   const done = list.items.filter((i) => i.completed);
+
+  const dragHandlersFor = (id: string) => ({
+    onDragStart: () => handleDragStart(id),
+    onDragEnd: handleDragEnd,
+    onDragOver: () => handleDragOver(id),
+    onDrop: () => handleDrop(id),
+  });
 
   return (
     <main className="todo-main">
@@ -64,6 +96,9 @@ export const TodoList = ({
             onToggle={onToggleItem}
             onEdit={onEditItem}
             onDelete={onDeleteItem}
+            {...dragHandlersFor(item.id)}
+            isDragOver={dragOverId === item.id}
+            isDragging={dragId === item.id}
           />
         ))}
         {done.length > 0 && (
@@ -77,6 +112,9 @@ export const TodoList = ({
                 onToggle={onToggleItem}
                 onEdit={onEditItem}
                 onDelete={onDeleteItem}
+                {...dragHandlersFor(item.id)}
+                isDragOver={dragOverId === item.id}
+                isDragging={dragId === item.id}
               />
             ))}
           </>

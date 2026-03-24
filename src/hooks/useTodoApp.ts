@@ -101,6 +101,22 @@ export const useTodoApp = () => {
     }));
   }, []);
 
+  const reorderItems = useCallback((listId: string, dragId: string, targetId: string) => {
+    setState((s) => ({
+      ...s,
+      lists: s.lists.map((l) => {
+        if (l.id !== listId) return l;
+        const items = [...l.items];
+        const fromIdx = items.findIndex((i) => i.id === dragId);
+        const toIdx = items.findIndex((i) => i.id === targetId);
+        if (fromIdx === -1 || toIdx === -1) return l;
+        const [moved] = items.splice(fromIdx, 1);
+        items.splice(toIdx, 0, moved);
+        return { ...l, items };
+      }),
+    }));
+  }, []);
+
   const activeList = state.lists.find((l) => l.id === state.activeListId) ?? null;
 
   return {
@@ -114,5 +130,6 @@ export const useTodoApp = () => {
     toggleItem,
     editItem,
     deleteItem,
+    reorderItems,
   };
 };

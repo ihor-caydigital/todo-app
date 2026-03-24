@@ -18,6 +18,7 @@ function App() {
     toggleItem,
     editItem,
     deleteItem,
+    reorderItems,
   } = useTodoApp();
 
   const { theme, toggleTheme } = useTheme();
@@ -41,6 +42,7 @@ function App() {
           onToggleItem={toggleItem}
           onEditItem={editItem}
           onDeleteItem={deleteItem}
+          onReorderItems={reorderItems}
         />
       ) : (
         <main className="todo-main welcome">
